@@ -1,0 +1,11 @@
+services:
+  platform:
+    image: thecodingmachine/nodejs:16
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app/:delegated
+    environment:
+      # Startup commands
+      STARTUP_COMMAND_1: yarn
+      STARTUP_COMMAND_2: yarn dev --host
