@@ -1,6 +1,16 @@
 <template>
   <search-input class="-mt-12" />
 
+  <span class="fixed p-3 bg-indigo-600 right-0 z-10 shadow-xl shadow-indigo-500/50 text-white rounded-l-lg">
+    <span class="flex items-center justify-center">
+      <pulse-state state="Alive" />
+      <span class="ml-3">
+        {{ nbAlive }} character(s) alive
+      </span>
+    </span>
+
+  </span>
+
   <div class="flex flex-wrap">
     <template
       v-for="({ image, name, species, status }, index) in data"
@@ -23,6 +33,7 @@ import { computed, onMounted } from "vue";
 // COMPONENTS
 import SearchInput from "../components/SearchInput.vue";
 import CharacterCard from '../components/CharacterCard.vue';
+import PulseState from "../components/PulseState.vue";
 
 const store = useStore();
 
@@ -32,6 +43,12 @@ onMounted(() => {
 
 const data = computed(() => {
   return store.state.charactersModule.data;
+});
+
+const nbAlive = computed(() => {
+  return data.value.filter(
+    (character) => character.status === 'Alive',
+  ).length || 0;
 });
 
 </script>
