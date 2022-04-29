@@ -1,5 +1,9 @@
 <template>
-  <search-input class="-mt-12" />
+  <search-input
+    v-model="name"
+    class="-mt-12"
+    @search="handleSearch"
+  />
 
   <span class="fixed p-3 bg-indigo-600 right-0 z-10 shadow-xl shadow-indigo-500/50 text-white rounded-l-lg">
     <span class="flex items-center justify-center">
@@ -30,7 +34,7 @@
 
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 // COMPONENTS
 import SearchInput from "../components/SearchInput.vue";
@@ -52,5 +56,23 @@ const nbAlive = computed(() => {
     (character) => character.status === 'Alive',
   ).length || 0;
 });
+
+const name = ref('');
+
+// Bonus Debounce
+// const debounceTimeout = ref<null | number>(null);
+//
+// watch(name, (value) => {
+//   if (debounceTimeout.value) {
+//     clearTimeout(debounceTimeout.value);
+//   }
+//   debounceTimeout.value = setTimeout(() => {
+//     store.dispatch('getCharacters', { name: value });
+//   }, 500);
+// });
+
+const handleSearch = () => {
+  store.dispatch('getCharacters', { name: name.value });
+};
 
 </script>

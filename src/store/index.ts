@@ -24,9 +24,10 @@ const charactersModule: Module<State, unknown> = {
         },
     },
     actions: {
-        async getCharacters({ commit }) {
+        async getCharacters({ commit }, { name } = {}) {
+            const queryString = name ? `/?name=${name}` : "";
             commit('setLoading', true);
-            fetch('https://rickandmortyapi.com/api/character').then(response => {
+            fetch(`https://rickandmortyapi.com/api/character${queryString}`).then(response => {
                 return response.json();
             }).then(data => {
                 commit('setCharacters', data.results);

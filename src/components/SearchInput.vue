@@ -17,15 +17,30 @@
           />
         </svg>
       </span>
-      <button class="absolute right-3 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded">Search</button>
+      <button
+        class="absolute right-3 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-4 rounded"
+        @click="emit('search', modelValue)"
+      >
+        Search
+      </button>
       <input
         class="w-full placeholder:text-slate-400 text-lg shadow-xl shadow-indigo-500/50 appearance-none border-4 border-indigo-500 rounded-lg py-6 pl-16 pr-28 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text"
         placeholder="Search for a character"
+        :value="modelValue"
+        @input="emit('update:modelValue', $event.target.value)"
+        @keydown.enter="emit('search', modelValue)"
       >
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['update:modelValue', 'search']);
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: '',
+  },
+});
 </script>
