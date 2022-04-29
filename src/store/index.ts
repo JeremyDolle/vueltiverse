@@ -38,7 +38,13 @@ const charactersModule: Module<State, unknown> = {
     },
 };
 
-export const store = createStore({
+type Store = {
+    state: {
+        charactersModule: Module<State, unknown>,
+    }
+};
+
+export const store = createStore<Store>({
     modules: {
         charactersModule,
     },

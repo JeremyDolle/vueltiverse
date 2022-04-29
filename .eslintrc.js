@@ -19,5 +19,6 @@ module.exports = {
     'vue/object-curly-spacing': ['error', 'always'],
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
     'vue/multiline-html-element-content-newline': 'error',
+    'vue/multi-word-component-names': 0,
   },
 };

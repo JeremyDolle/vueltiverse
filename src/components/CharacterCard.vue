@@ -14,23 +14,12 @@
   </a>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { defineProps } from "vue";
 
-export default defineComponent({
-  props: {
-    image: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    subtitle: {
-      type: String,
-      required: true,
-    },
-  },
+const props = defineProps({
+  title: { type: String, required: true },
+  subtitle: { type: String, required: true },
+  image: { type: String, required: true },
 });
 </script>
