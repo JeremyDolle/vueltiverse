@@ -3,13 +3,14 @@
 
   <div class="flex flex-wrap">
     <template
-      v-for="({ image, name, species }, index) in data"
+      v-for="({ image, name, species, status }, index) in data"
       :key="'character-card-' + index"
     >
       <character-card
         :image="image"
         :title="name"
         :subtitle="species"
+        :state="status"
       />
     </template>
   </div>
