@@ -38,14 +38,48 @@ const charactersModule: Module<State, unknown> = {
     },
 };
 
+const characterModule: Module<State, unknown> = {
+    state: () => ({
+        data: [],
+        loading: false,
+        error: null,
+    }),
+    mutations: {
+        setCharacter(state, payload) {
+            state.data = payload;
+        },
+        setLoading(state, payload) {
+            state.loading = payload;
+        },
+        setError(state, payload) {
+            state.error = payload;
+        },
+    },
+    actions: {
+        async getCharacter({ commit }, { id }) {
+            commit('setLoading', true);
+            fetch(`https://rickandmortyapi.com/api/character/${id}`).then(response => {
+                return response.json();
+            }).then(data => {
+                commit('setCharacter', data);
+            }).catch(error => {
+                commit('setError', error);
+            });
+            commit('setLoading', false);
+        },
+    },
+};
+
 type Store = {
     state: {
         charactersModule: Module<State, unknown>,
+        characterModule: Module<State, unknown>,
     }
 };
 
 export const store = createStore<Store>({
     modules: {
         charactersModule,
+        characterModule,
     },
 });

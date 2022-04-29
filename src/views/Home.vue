@@ -11,17 +11,19 @@
 
   </span>
 
-  <div class="flex flex-wrap">
+  <div class="flex flex-wrap justify-between px-20">
     <template
-      v-for="({ image, name, species, status }, index) in data"
-      :key="'character-card-' + index"
+      v-for="({ id, image, name, species, status }) in data"
+      :key="`character-card-${id}`"
     >
-      <character-card
-        :image="image"
-        :title="name"
-        :subtitle="species"
-        :state="status"
-      />
+      <router-link :to="{ name: 'details', params: { id } }">
+        <character-card
+          :image="image"
+          :title="name"
+          :subtitle="species"
+          :state="status"
+        />
+      </router-link>
     </template>
   </div>
 </template>
