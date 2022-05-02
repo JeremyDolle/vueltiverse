@@ -29,12 +29,29 @@
         />
       </router-link>
     </template>
+    <div class="flex w-full justify-end mr-6 mb-10">
+      <button
+        :class="{ 'bg-gray-100 cursor-not-allowed	': !hasPrevious, 'hover:bg-gray-700': hasPrevious }"
+        class="bg-gray-500 mr-6 text-white font-bold py-2 px-4"
+        @click="handlePrevious"
+      >
+        Previous page
+      </button>
+
+      <button
+        :class="{ 'bg-green-100 cursor-not-allowed	': !hasNext, 'hover:bg-green-700': hasNext }"
+        class="bg-green-500 text-white font-bold py-2 px-4 "
+        @click="handleNext"
+      >
+        Next page
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 // COMPONENTS
 import SearchInput from "../components/SearchInput.vue";
@@ -49,6 +66,14 @@ onMounted(() => {
 
 const data = computed(() => {
   return store.state.charactersModule.data;
+});
+
+const hasNext = computed(() => {
+  return store.state.charactersModule.pageInfo.hasNextPage;
+});
+
+const hasPrevious = computed(() => {
+  return store.state.charactersModule.pageInfo.hasPreviousPage;
 });
 
 const nbAlive = computed(() => {
@@ -73,6 +98,14 @@ const name = ref('');
 
 const handleSearch = () => {
   store.dispatch('getCharacters', { name: name.value });
+};
+
+const handlePrevious = () => {
+  store.dispatch('getCharacters', { page: store.state.charactersModule.pageInfo.page - 1 });
+};
+
+const handleNext = () => {
+  store.dispatch('getCharacters', { page: Number(store.state.charactersModule.pageInfo.page) + 1 });
 };
 
 </script>
